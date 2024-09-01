@@ -11,10 +11,21 @@ module rodada_simon(
     assign PT1 = texto[127:64]; // PT1 representa a primeira metade do texto
     assign PT2 = texto[63:0];   // PT2 representa a segunda metade do texto
 
-    // Implementação da rodada de criptografia
+    // Implementação da rodada de criptografia Simon
     always_comb begin
-        CT1 = PT2 ^ (((PT1 <<< 1) & (PT1 <<< 8)) ^ (PT1 <<< 2)) ^ kj_i; // Cálculo da primeira parte do texto cifrado (CT1)
-        CT2 = PT1; // A segunda parte do texto cifrado (CT2) é apenas a primeira parte do texto claro (PT1)
+        // Operações de rotação e XOR para o algoritmo Simon
+        logic [63:0] rot1, rot8, rot2;
+
+        // Realizando as rotações
+        rot1 = {PT1[62:0], PT1[63]};          // Rotação para a esquerda em 1 bit
+        rot8 = {PT1[55:0], PT1[63:56]};       // Rotação para a esquerda em 8 bits
+        rot2 = {PT1[61:0], PT1[63:62]};       // Rotação para a esquerda em 2 bits
+
+        // Cálculo de CT1 usando as operações Simon
+        CT1 = PT2 ^ (rot1 & rot8) ^ rot2 ^ kj_i; 
+
+        // A segunda parte do texto cifrado (CT2) é apenas a primeira parte do texto claro (PT1)
+        CT2 = PT1;
     end
 
     // Concatenar os resultados para formar a saída de 128 bits do texto cifrado
