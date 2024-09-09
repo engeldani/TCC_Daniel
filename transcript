@@ -1,0 +1,101 @@
+# do sim_chave.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work work 
+# Modifying modelsim.ini
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 20:04:47 on Sep 09,2024
+# vlog -reportprogress 300 rtl/esquema_chave.sv 
+# -- Compiling module esquema_chave
+# 
+# Top level modules:
+# 	esquema_chave
+# End time: 20:04:47 on Sep 09,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 20:04:48 on Sep 09,2024
+# vlog -reportprogress 300 sim/tb_chave.sv 
+# -- Compiling module tb_chave
+# 
+# Top level modules:
+# 	tb_chave
+# End time: 20:04:48 on Sep 09,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim work.tb_chave 
+# Start time: 20:04:48 on Sep 09,2024
+# Loading sv_std.std
+# Loading work.tb_chave
+# Loading work.esquema_chave
+run 1ms
+# k 0 = 0b0a090803020100
+# k 1 = 1b1a191813121110
+# k 2 = 09d8ebba80516233
+# k 3 = b543752b14e2d488
+# k 4 = 6bdb4db2ac7cea17
+# k 5 = d17a57b994557897
+# k 6 = 131c5dc1f84ced70
+# k 7 = 2dd7e6224b27d413
+# k 8 = bb8420986a65954e
+# k 9 = eee0dfc73f32c012
+# k10 = 3749c963018f1eb0
+# k11 = 1482858290e42dd2
+# k12 = ab6e4e748562262b
+# k13 = 24a65754b7e1b488
+# k14 = d24f1e14a71ff40e
+# k15 = ec34ba88968c4ab5
+# k16 = cef53d12c359460e
+# k17 = 26fab1041d2d09e9
+# k18 = 87ba3fddfed1c850
+# k19 = c189aafd82e5d39b
+# k20 = bc6c6fd2695cd0e7
+# k21 = b23d1e0516a47b74
+# k22 = 9ef7e20d651de7c2
+# k23 = 37f3639b93a9e60c
+# k24 = 248947b851adba9f
+# k25 = ded520e8e379750b
+# k26 = 1d414e543c0afc92
+# k27 = 4356e238d8c77aac
+# k28 = aee103cf55619b91
+# k29 = 939b2d8238c2af9b
+# k30 = 9a542b58ce0a1b66
+# k31 = d68b15a3521cb2bd
+# k32 = 021207496e97b9e7
+# k33 = b9178ac116d8c1e3
+# k34 = b15e7142a2ded239
+# k35 = ebd65c029751097b
+# k36 = 8d6620fd26be1c7c
+# k37 = 4d5305ed1e12d4ce
+# k38 = 5fe68fe1ab629455
+# k39 = 4cae4310ce3750fd
+# k40 = dd465c4d41b8f4b8
+# k41 = 252d12a24de43edd
+# k42 = 544ed0ccd325cf72
+# k43 = b51fda48e54d2439
+# k44 = 064329debe27464a
+# k45 = aa4c721126944769
+# k46 = 56519f427763752c
+# k47 = 1a1ca7f2b0f1e162
+# k48 = cb4c3e3cf58da8ea
+# k49 = 103e1c291ee7710d
+# k50 = 47b7e384b840ce27
+# k51 = 734c619e3d949bd7
+# k52 = 2115565163d4eb1c
+# k53 = ca8061cef82cb7f8
+# k54 = 4b12a38bacac4961
+# k55 = 08ace078c88c05bf
+# k56 = a5720e7cc6caf671
+# k57 = d9aa7eaf63c60beb
+# k58 = 9c2219bc2371a84f
+# k59 = 2c13e3fcda60db9b
+# k60 = b49ea4038a644178
+# k61 = 4e3622c36c75e85f
+# k62 = 5644fd882ed25d0b
+# k63 = 6e650d5514bd79d2
+# k64 = c291f30822f1da51
+# k65 = b5e1d3fb6d33a0c0
+# k66 = 208c2bb7067b6bb8
+# k67 = cc076bc9026484f0
+# ** Note: $finish    : sim/tb_chave.sv(31)
+#    Time: 1470 ps  Iteration: 1  Instance: /tb_chave
+# 1
+# Break in Module tb_chave at sim/tb_chave.sv line 31
