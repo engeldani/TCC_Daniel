@@ -99,3 +99,5 @@ run 1ms
 #    Time: 1470 ps  Iteration: 1  Instance: /tb_chave
 # 1
 # Break in Module tb_chave at sim/tb_chave.sv line 31
+# End time: 20:27:22 on Sep 09,2024, Elapsed time: 0:22:34
+# Errors: 0, Warnings: 0

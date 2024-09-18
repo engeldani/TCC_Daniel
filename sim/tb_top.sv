@@ -1,4 +1,4 @@
-module tb_rodada;  // Início do módulo de testbench para o módulo rodada_simon
+module tb_top;  // Início do módulo de testbench para o módulo top_simon
 
   // **Declaração dos sinais de teste**
   reg clk;  // Sinal de clock
@@ -10,13 +10,13 @@ module tb_rodada;  // Início do módulo de testbench para o módulo rodada_simo
   // **Contador de rodadas**
   integer round_count = 0;  // Inicializa o contador de rodadas em zero
 
-  // **Instanciação do módulo a ser testado**
-  rodada_simon uut (  // 'uut' significa 'unidade sob teste'
-    .clk(clk),       // Conecta o sinal de clock
-    .rst_n(rst_n),   // Conecta o sinal de reset
-    .pt_i(pt_i),     // Conecta a entrada de plaintext
-    .k0_i(k0_i),     // Conecta a entrada de chave inicial
-    .ct_o(ct_o)      // Recebe a saída de ciphertext
+  // **Instanciação do módulo top_simon**
+  top_simon uut (  // 'uut' significa 'unidade sob teste'
+    .clk(clk),      // Conecta o sinal de clock
+    .rst_n(rst_n),  // Conecta o sinal de reset
+    .pt_i(pt_i),    // Conecta a entrada de plaintext
+    .k0_i(k0_i),    // Conecta a entrada de chave inicial
+    .ct_o(ct_o)     // Recebe a saída de ciphertext
   );
 
   // **Geração do clock**
