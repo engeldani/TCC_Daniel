@@ -1,9 +1,9 @@
 module rodada_simon(
     input logic clk,
     input logic rst_n,
-    input  logic [127:0] texto,  // Entrada de texto de 128 bits
+    input  logic [127:0] pt_i,  // Entrada de texto de 128 bits
     input  logic [ 63:0] kj_i,   // Entrada da chave de rodada de 64 bits
-    output logic [127:0] cifrado // Saída de texto cifrado de 128 bits
+    output logic [127:0] ct_o // Saída de texto cifrado de 128 bits
 );
     // Dividir o bloco de 128 bits em dois blocos de 64 bits
     logic [63:0] pt1, pt2; // Partes 1 e 2 do texto claro de 64 bits cada
@@ -12,8 +12,8 @@ module rodada_simon(
     always_ff @(posedge clk or negedge rst_n) begin   // Bloco sempre sensível à borda de subida do clock ou borda de descida do reset
         if (!rst_n) begin                             // Se o reset estiver ativo (baixo)
             // Separando os dois blocos de 64 bits a partir dos 128 bits de texto e chave
-            pt1 <= texto[63:0];
-            pt2 <= texto[127:64];
+            pt1 <= pt_i[63:0];
+            pt2 <= pt_i[127:64];
         end
         else begin                                    // Caso contrário, quando o reset não estiver ativo
             pt1 <= ct1;
@@ -39,6 +39,6 @@ module rodada_simon(
     end
 
     // Concatenar os resultados para formar a saída de 128 bits do texto cifrado
-    assign cifrado = {pt1, pt2}; // Combinação de CT1 e CT2 para formar o texto cifrado completo de 128 bits
+    assign ct_o = {pt1, pt2}; // Combinação de CT1 e CT2 para formar o texto cifrado completo de 128 bits
 
 endmodule
