@@ -23,7 +23,7 @@ module testbench;
         #100 rst_n = 1;
 
         // Loop para testar cada rodada de criptografia e geração de chave
-        for (int i = 0; i < 68; i++) begin
+        for (int i = 0; i < 69; i++) begin
             @(negedge clk);
             // Exibir resultados de cada rodada
         end

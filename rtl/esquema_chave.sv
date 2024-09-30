@@ -14,7 +14,7 @@ module esquema_chave (
     localparam logic [63:0] c = 64'hFFFFFFFFFFFFFFFC; // Define uma constante de 64 bits para o algoritmo de geração de chave
 
     // Constante z2 utilizada na geração de chave
-    localparam logic [61:0] z2 = 62'b10101111011100000011010010011000101000010001111110010110110011;  // Constante usada para o cálculo da constante de rodada
+    localparam logic [61:0] z2 = 62'b11001101101001111110001000010100011001001011000000111011110101;  // Constante usada para o cálculo da constante de rodada
     logic [61:0] z;            // Variável para armazenar o valor atual da constante de rodada
 
 
@@ -32,14 +32,7 @@ module esquema_chave (
         end
     end
 
-    always_ff @(posedge clk or negedge rst_n) begin   // Bloco sempre sensível à borda de subida do clock ou borda de descida do reset
-        if (!rst_n) begin                             // Se o reset estiver ativo (baixo)
-            rc <= '0;                                 // Inicializa a constante de rodada rc com 0
-        end
-        else begin                                    // Caso contrário, quando o reset não estiver ativo
-            rc <= {c[63:1], z[0]};                    // Atualiza rc com uma combinação da constante c e o bit menos significativo de z
-        end
-    end
+    assign rc = {c[63:1], z[0]};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Geração da chave
@@ -53,8 +46,8 @@ module esquema_chave (
     // Separando as partes da chave atual
     always_ff @(posedge clk or negedge rst_n) begin   // Bloco sempre sensível à borda de subida do clock ou borda de descida do reset
         if (!rst_n) begin                             // Se o reset estiver ativo (baixo)
-            k1 <= k0_i[63:0];                         // Inicializa k1 com os 64 bits menos significativos da chave inicial k0_i
-            k2 <= k0_i[127:64];                       // Inicializa k2 com os 64 bits mais significativos da chave inicial k0_i
+            k1 <= k0_i[63:0];                         // Inicializa k1 com os 64 bits mais significativos da chave inicial k0_i
+            k2 <= k0_i[ 127: 64];                       // Inicializa k2 com os 64 bits menos significativos da chave inicial k0_i
         end
         else begin                                    // Caso contrário, quando o reset não estiver ativo
             k1 <= k2;                                 // Atualiza k1 com o valor atual de k2

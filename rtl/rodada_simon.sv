@@ -12,8 +12,8 @@ module rodada_simon(
     always_ff @(posedge clk or negedge rst_n) begin   // Bloco sempre sensível à borda de subida do clock ou borda de descida do reset
         if (!rst_n) begin                             // Se o reset estiver ativo (baixo)
             // Separando os dois blocos de 64 bits a partir dos 128 bits de texto e chave
-            pt1 <= pt_i[63:0];
-            pt2 <= pt_i[127:64];
+            pt1 <= pt_i[127:64];
+            pt2 <= pt_i[ 63: 0];
         end
         else begin                                    // Caso contrário, quando o reset não estiver ativo
             pt1 <= ct1;
@@ -32,7 +32,7 @@ module rodada_simon(
         rot2 = {pt1[61:0], pt1[63:62]};       // Rotação para a esquerda em 2 bits
 
         // Cálculo de CT1 usando as operações Simon
-        ct1 = pt2 ^ (rot1 & rot8) ^ rot2 ^ kj_i; 
+        ct1 = (pt2 ^ ((rot1 & rot8) ^ rot2)) ^ kj_i; 
 
         // A segunda parte do texto cifrado (CT2) é apenas a primeira parte do texto claro (PT1)
         ct2 = pt1;

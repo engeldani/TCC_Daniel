@@ -26,4 +26,14 @@ module top_simon (
     .ct_o(ct_o)       // Fornece o ciphertext resultante
   );
 
+  always_ff @(posedge clk or negedge rst_n) begin   // Bloco sempre sensível à borda de subida do clock ou borda de descida do reset
+    if (!rst_n) begin                             // Se o reset estiver ativo (baixo)
+      ;                                  // Inicializa z com o valor da constante z2
+    end
+    else begin                                    // Caso contrário, quando o reset não estiver ativo
+      $display("X=%x, Y=%x, K=%x", ct_o[127:64], ct_o[63:0], kj);
+    end
+  end
+  
+
 endmodule  // Fim do módulo top_simon
