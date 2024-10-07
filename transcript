@@ -370,3 +370,5 @@ run -all
 #    Time: 1460 ps  Iteration: 1  Instance: /testbench
 # 1
 # Break in Module testbench at sim/testbench.sv line 33
+# End time: 20:47:55 on Sep 30,2024, Elapsed time: 0:29:27
+# Errors: 0, Warnings: 0
