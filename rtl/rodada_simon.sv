@@ -1,6 +1,7 @@
 module rodada_simon(
     input logic clk,
     input logic rst_n,
+    input logic enable_i,
     input  logic [127:0] pt_i,  // Entrada de texto de 128 bits
     input  logic [ 63:0] kj_i,   // Entrada da chave de rodada de 64 bits
     output logic [127:0] ct_o // Saída de texto cifrado de 128 bits
@@ -15,6 +16,26 @@ module rodada_simon(
             pt1 <= pt_i[127:64];
             pt2 <= pt_i[ 63: 0];
         end
+        //
+        always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+        // Inicializa pt1 e pt2 com 0 no reset
+        pt1 <= 64'b0;
+        pt2 <= 64'b0;
+    end else if (!enable) begin
+        // Sem enable, grava os valores de entrada em pt1 e pt2
+        pt1 <= pt_i[127:64];  // Parte mais significativa do texto de entrada
+        pt2 <= pt_i[ 63: 0];  // Parte menos significativa do texto de entrada
+    end else begin
+        // Com enable ativo, atualiza os valores conforme a computação
+        pt1 <= ct1;  // Atualiza com os valores cifrados
+        pt2 <= ct2;  // Atualiza com os valores cifrados
+    end
+end
+        // No reset, inicializar valores (pt1, pt2) em 0
+        // Quando SEM enable, gravar em pt1 e pt2 os valores da entrada (pt_i) como é feito hoje no reset
+        
+        // Quando COM enable, atualizar os valores conforme a computação:
         else begin                                    // Caso contrário, quando o reset não estiver ativo
             pt1 <= ct1;
             pt2 <= ct2;

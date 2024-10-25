@@ -1,8 +1,9 @@
 module esquema_chave (
-    input  logic         clk,    // Sinal de clock para sincronização das operações sequenciais
-    input  logic         rst_n,  // Sinal de reset ativo em nível baixo para inicializar o módulo
-
-    input  logic [127:0] k0_i, // Entrada da chave de 128 bits (inicial)
+    input  logic         clk,      // Sinal de clock para sincronização das operações sequenciais
+    input  logic         rst_n,    // Sinal de reset ativo em nível baixo para inicializar o módulo
+    input  logic         enable_i, // Sinal de habilitação
+    input  logic [127:0] k0_i,     // Entrada da chave de 128 bits (inicial)
+    
     output logic [ 63:0] kj_o  // Saída da nova chave gerada de 64 bits para ser usada em cada rodada de criptografia
 );
 
@@ -49,6 +50,27 @@ module esquema_chave (
             k1 <= k0_i[63:0];                         // Inicializa k1 com os 64 bits mais significativos da chave inicial k0_i
             k2 <= k0_i[ 127: 64];                       // Inicializa k2 com os 64 bits menos significativos da chave inicial k0_i
         end
+    //
+    always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+        // Inicializa os valores no reset
+        k1 <= k0_i[127:64];  // Inicializa k1 com os 64 bits mais significativos da chave inicial k0_i
+        k2 <= k0_i[ 63: 0];  // Inicializa k2 com os 64 bits menos significativos da chave inicial k0_i
+    end else if (!enable) begin
+        // Sem o enable ativo, mantém os valores de entrada como no reset
+        k1 <= k0_i[127:64];  // Mantém k1 com os 64 bits mais significativos da chave inicial k0_i
+        k2 <= k0_i[ 63: 0];  // Mantém k2 com os 64 bits menos significativos da chave inicial k0_i
+    end else begin
+        // Com enable ativo, atualiza os valores
+        k1 <= k2;            // Atualiza k1 com o valor de k2
+        k2 <= k2_proximo;     // Atualiza k2 com o próximo valor calculado (k2_proximo)
+    end
+end
+
+        // No reset deve inicializar em 0
+        // Sem enable, grava valores de entrada (como está no reset hoje)
+
+        // Com enable, grava os próximos valores:
         else begin                                    // Caso contrário, quando o reset não estiver ativo
             k1 <= k2;                                 // Atualiza k1 com o valor atual de k2
             k2 <= k2_proximo;                         // Atualiza k2 com o valor calculado para k2_proximo
