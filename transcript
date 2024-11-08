@@ -4,34 +4,125 @@
 # vmap work work 
 # Modifying modelsim.ini
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 14:29:26 on Oct 12,2024
+# Start time: 23:31:26 on Nov 07,2024
 # vlog -reportprogress 300 rtl/rodada_simon.sv 
 # -- Compiling module rodada_simon
 # 
 # Top level modules:
 # 	rodada_simon
-# End time: 14:29:26 on Oct 12,2024, Elapsed time: 0:00:00
+# End time: 23:31:26 on Nov 07,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 14:29:27 on Oct 12,2024
+# Start time: 23:31:26 on Nov 07,2024
 # vlog -reportprogress 300 rtl/esquema_chave.sv 
 # -- Compiling module esquema_chave
 # 
 # Top level modules:
 # 	esquema_chave
-# End time: 14:29:27 on Oct 12,2024, Elapsed time: 0:00:00
+# End time: 23:31:26 on Nov 07,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 14:29:27 on Oct 12,2024
+# Start time: 23:31:26 on Nov 07,2024
 # vlog -reportprogress 300 rtl/top_simon.sv 
 # -- Compiling module top_simon
-# ** Error: (vlog-13069) rtl/top_simon.sv(4): near "typedef": syntax error, unexpected "SystemVerilog keyword 'typedef'", expecting ')'.
-# End time: 14:29:27 on Oct 12,2024, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
+# 
+# Top level modules:
+# 	top_simon
+# End time: 23:31:26 on Nov 07,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:31:26 on Nov 07,2024
+# vlog -reportprogress 300 rtl/simon_interface.sv 
+# -- Compiling module simon_interface
+# 
+# Top level modules:
+# 	simon_interface
+# End time: 23:31:27 on Nov 07,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:31:27 on Nov 07,2024
+# vlog -reportprogress 300 sim/tb_simon_interface.sv 
+# -- Compiling module tb_simon_interface
+# ** Error: (vlog-13053) sim/tb_simon_interface.sv(110): near "'7": Illegal base specifier in numeric constant.
+# ** Error: (vlog-13053) sim/tb_simon_interface.sv(125): near "'7": Illegal base specifier in numeric constant.
+# End time: 23:31:27 on Nov 07,2024, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 0
 # ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vlog failed.
-# Error in macro ./sim_simon.do line 6
+# Error in macro ./sim_simon.do line 8
 # C:/intelFPGA/20.1/modelsim_ase/win32aloem/vlog failed.
 #     while executing
-# "vlog rtl/top_simon.sv"
-run -all
-# No Design Loaded!
+# "vlog sim/tb_simon_interface.sv"
+do sim_simon.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work work 
+# Modifying modelsim.ini
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:32:30 on Nov 07,2024
+# vlog -reportprogress 300 rtl/rodada_simon.sv 
+# -- Compiling module rodada_simon
+# 
+# Top level modules:
+# 	rodada_simon
+# End time: 23:32:30 on Nov 07,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:32:30 on Nov 07,2024
+# vlog -reportprogress 300 rtl/esquema_chave.sv 
+# -- Compiling module esquema_chave
+# 
+# Top level modules:
+# 	esquema_chave
+# End time: 23:32:30 on Nov 07,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:32:30 on Nov 07,2024
+# vlog -reportprogress 300 rtl/top_simon.sv 
+# -- Compiling module top_simon
+# 
+# Top level modules:
+# 	top_simon
+# End time: 23:32:30 on Nov 07,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:32:30 on Nov 07,2024
+# vlog -reportprogress 300 rtl/simon_interface.sv 
+# -- Compiling module simon_interface
+# 
+# Top level modules:
+# 	simon_interface
+# End time: 23:32:30 on Nov 07,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:32:30 on Nov 07,2024
+# vlog -reportprogress 300 sim/tb_simon_interface.sv 
+# -- Compiling module tb_simon_interface
+# 
+# Top level modules:
+# 	tb_simon_interface
+# End time: 23:32:30 on Nov 07,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim work.tb_simon_interface 
+# Start time: 23:32:30 on Nov 07,2024
+# Loading sv_std.std
+# Loading work.tb_simon_interface
+# Loading work.simon_interface
+# Loading work.top_simon
+# Loading work.esquema_chave
+# Loading work.rodada_simon
+run 1us
+# Ciphertext part 0: b6f94d4e
+# Ciphertext part 1: 7c864958
+# Ciphertext part 2: 81f058bb
+# Ciphertext part 3: 1d78c145
+run 1us
+# Ciphertext part 0: b6f94d4e
+# Ciphertext part 1: 7c864958
+# Ciphertext part 2: 81f058bb
+# Ciphertext part 3: 1d78c145
+# ** Note: $finish    : sim/tb_simon_interface.sv(173)
+#    Time: 1110 ns  Iteration: 1  Instance: /tb_simon_interface
+# 1
+# Break in Module tb_simon_interface at sim/tb_simon_interface.sv line 173
+# End time: 23:33:29 on Nov 07,2024, Elapsed time: 0:00:59
+# Errors: 0, Warnings: 0

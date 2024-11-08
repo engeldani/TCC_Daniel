@@ -38,23 +38,15 @@ module top_simon (
       current_state <= next_state;  // Atualiza o estado atual para o próximo estado
   end
 
-// Definir o sinal de habilitação (enable)
-logic enable;  // enable: sinal de habilitação
-
-// Lógica para gerar o sinal de habilitação
-always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        enable <= 0;  // Reset: desabilita o sinal enable
-    end else if (start_i) begin
-        enable <= 1;  // Ativa o enable quando o start_i for ativado
-    end
-end
-  
+  // Definir o sinal de habilitação (enable)
+  logic enable;  // enable: sinal de habilitação
   assign enable = (current_state == ENCRYPT);
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n)
       round_cnt <= 7'd67;        // Inicializa o contador com 67 (total de 68 ciclos)
+    else if (current_state == IDLE)
+      round_cnt <= 7'd67;
     else if (current_state == ENCRYPT)
       round_cnt <= round_cnt - 1'b1;  // Decrementa o contador a cada ciclo
   end
@@ -81,7 +73,6 @@ end
 
   // **Sinais internos**
   logic  [63:0] kj;  // Sinal para a saída do esquema de chave
-  logic enable;
   // **Instanciação do esquema de chave**
   esquema_chave key_sched (
     .clk(clk),       // Conecta o clock
@@ -101,13 +92,13 @@ end
     .ct_o(ct)         // Fornece o ciphertext resultante
   );
 
-  always_ff @(posedge clk or negedge rst_n) begin   // Bloco sempre sensível à borda de subida do clock ou borda de descida do reset
-    if (!rst_n) begin                             // Se o reset estiver ativo (baixo)
-      ;                                  // Inicializa z com o valor da constante z2
-    end
-    else begin                                    // Caso contrário, quando o reset não estiver ativo
-      $display("X=%x, Y=%x, K=%x", ct[127:64], ct[63:0], kj);
-    end
-  end
+  // always_ff @(posedge clk or negedge rst_n) begin   // Bloco sempre sensível à borda de subida do clock ou borda de descida do reset
+  //   if (!rst_n) begin                             // Se o reset estiver ativo (baixo)
+  //     ;                                  // Inicializa z com o valor da constante z2
+  //   end
+  //   else begin                                    // Caso contrário, quando o reset não estiver ativo
+  //     $display("X=%x, Y=%x, K=%x", ct[127:64], ct[63:0], kj);
+  //   end
+  // end
 
 endmodule  // Fim do módulo top_simon
