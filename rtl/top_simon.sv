@@ -26,7 +26,7 @@ module top_simon (
     case (current_state)
       IDLE:    next_state = start_i             ? ENCRYPT : IDLE;
       ENCRYPT: next_state = (round_cnt == 7'd0) ? FINISH  : ENCRYPT;
-      FINISH:  next_state = IDLE;
+      default: next_state = IDLE; /* FINISH */
     endcase
   end
 

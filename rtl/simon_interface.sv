@@ -56,15 +56,16 @@ module simon_interface (
             if (en_i) begin
                 if (we_i != '0) begin  // Escrita nos registradores
                     case (addr_i)
-                        8'h00: pt [127:96] <= w_data;
-                        8'h04: pt [ 95:64] <= w_data;
-                        8'h08: pt [ 63:32] <= w_data;
-                        8'h0C: pt [ 31: 0] <= w_data;
-                        8'h10: key[127:96] <= w_data;
-                        8'h14: key[ 95:64] <= w_data;
-                        8'h18: key[ 63:32] <= w_data;
-                        8'h1C: key[ 31: 0] <= w_data;
-                        8'h30: start       <= w_data[0];    // "CSR"
+                        8'h00:   pt [127:96] <= w_data;
+                        8'h04:   pt [ 95:64] <= w_data;
+                        8'h08:   pt [ 63:32] <= w_data;
+                        8'h0C:   pt [ 31: 0] <= w_data;
+                        8'h10:   key[127:96] <= w_data;
+                        8'h14:   key[ 95:64] <= w_data;
+                        8'h18:   key[ 63:32] <= w_data;
+                        8'h1C:   key[ 31: 0] <= w_data;
+                        8'h30:   start       <= w_data[0];    // "CSR"
+                        default: ;
                     endcase
                 end
             end
