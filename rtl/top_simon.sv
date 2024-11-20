@@ -58,7 +58,7 @@ module top_simon (
             valid <= 1'b0;
         end
         else begin
-            if (current_state == IDLE)
+            if (start_i && current_state == IDLE)
                 valid <= 1'b0;
             else if (current_state == FINISH)
                 valid <= 1'b1;
@@ -115,14 +115,14 @@ module top_simon (
     assign kj_decrypt = subkeys[67 - round_cnt];
     assign kj = encrypt_i ? kj_round : kj_decrypt;
 
-    always_ff @(posedge clk or negedge rst_n) begin   // Bloco sempre sensível à borda de subida do clock ou borda de descida do reset
-      if (!rst_n) begin                             // Se o reset estiver ativo (baixo)
-        ;                                  // Inicializa z com o valor da constante z2
-      end
-      else begin                                    // Caso contrário, quando o reset não estiver ativo
-        $display("X=%x, Y=%x, K=%x", ct[127:64], ct[63:0], kj);
-        $display("ROUND %d", round_cnt);
-      end
-    end
+    // always_ff @(posedge clk or negedge rst_n) begin   // Bloco sempre sensível à borda de subida do clock ou borda de descida do reset
+    //   if (!rst_n) begin                             // Se o reset estiver ativo (baixo)
+    //     ;                                  // Inicializa z com o valor da constante z2
+    //   end
+    //   else begin                                    // Caso contrário, quando o reset não estiver ativo
+    //     $display("X=%x, Y=%x, K=%x", ct[127:64], ct[63:0], kj);
+    //     $display("ROUND %d", round_cnt);
+    //   end
+    // end
 
 endmodule  // Fim do módulo top_simon
