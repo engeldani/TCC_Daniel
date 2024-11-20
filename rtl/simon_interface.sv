@@ -11,7 +11,7 @@ module simon_interface (
 
     // Registradores para texto plano (PT), chave (KEY), e texto cifrado (CT)
     logic [127:0] pt, key, ct;
-    logic         start, valid;
+    logic         start, valid, mode;
 
     // Leitura de dados
     logic [31:0] r_data;
@@ -30,6 +30,7 @@ module simon_interface (
             8'h28:   r_data = ct [ 95:64];
             8'h2C:   r_data = ct [127:96];  // Leitura do ciphertext
             8'h30:   r_data = {30'b0, valid, start};   // "CSR"
+            8'h34:   r_data = {31'b0, mode};
             default: r_data = '0;
         endcase
     end
@@ -51,6 +52,7 @@ module simon_interface (
             pt    <= 128'b0;
             key   <= 128'b0;
             start <= 1'b0;
+            mode  <= 1'b0;
         end
         else begin
             if (en_i) begin
@@ -64,7 +66,8 @@ module simon_interface (
                         8'h14:   key[ 63:32] <= w_data;
                         8'h18:   key[ 95:64] <= w_data;
                         8'h1C:   key[127:96] <= w_data;
-                        8'h30:   start       <= w_data[0];    // "CSR"
+                        8'h30:   start       <= w_data[0];
+                        8'h34:   mode        <= w_data[0];    // "CSR"
                         default: ;
                     endcase
                 end
@@ -90,6 +93,7 @@ module simon_interface (
         .clk(clk),
         .rst_n(rst_n),
         .start_i(start),
+        .encrypt_i(mode),
         .pt_i(pt),
         .k0_i(key),
         .valid_o(valid),
