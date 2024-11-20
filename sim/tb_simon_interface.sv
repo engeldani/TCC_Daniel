@@ -30,8 +30,8 @@ module tb_simon_interface;
         rst_n = 0;
         en_i = 0;
         we_i = 4'b0;
-        addr_i = 32'b0;
-        data_i = 32'b0;
+        addr_i = '0;
+        data_i = '0;
 
         // Libera o reset após 10 unidades de tempo
         #100 rst_n = 1;
@@ -41,64 +41,68 @@ module tb_simon_interface;
         en_i = 1;
         we_i = 4'b1111;  // Ativa escrita para tods os bytes
 
-        addr_i = 32'h0000_0000;
-        data_i = 32'h0123_4567;  // Parte mais alta do plaintext
+        addr_i = 8'h34;
+        data_i = 32'h0000_0001;  // Modo encrypt
         @(negedge clk);
-        addr_i = 32'h0000_0004;
-        data_i = 32'h89AB_CDEF;  // Parte seguinte
+
+        addr_i = 8'h00;
+        data_i = 32'h89AB_CDEF;  // Parte mais baixa
         @(negedge clk);
-        addr_i = 32'h0000_0008;
+        addr_i = 8'h04;
         data_i = 32'h0123_4567;
         @(negedge clk);
-        addr_i = 32'h0000_000C;
-        data_i = 32'h89AB_CDEF;  // Parte mais baixa
+        addr_i = 8'h08;
+        data_i = 32'h89AB_CDEF;  // Parte seguinte
+        @(negedge clk);
+        addr_i = 8'h0C;
+        data_i = 32'h0123_4567;  // Parte mais alta do plaintext
         @(negedge clk);
 
         // Teste: Escrever chave nos registradores KEY_0~3
         @(negedge clk); 
-        addr_i = 32'h0000_0010;
-        data_i = 32'h0F0E_0D0C;  // Parte mais alta da chave
-        @(negedge clk);
-        addr_i = 32'h0000_0014;
-        data_i = 32'h0B0A_0908;  // Parte seguinte
-        @(negedge clk); 
-        addr_i = 32'h0000_0018;
-        data_i = 32'h0706_0504;
-        @(negedge clk);
-        addr_i = 32'h0000_001C;
+        addr_i = 8'h10;
         data_i = 32'h0302_0100;  // Parte mais baixa
+        @(negedge clk);
+        addr_i = 8'h14;
+        data_i = 32'h0706_0504;
+        @(negedge clk); 
+        addr_i = 8'h18;
+        data_i = 32'h0B0A_0908;  // Parte seguinte
+        @(negedge clk);
+        addr_i = 8'h1C;
+        data_i = 32'h0F0E_0D0C;  // Parte mais alta da chave
         @(negedge clk);
 
         // Teste: Iniciar a operação de criptografia (escrever no CSR)
-        addr_i = 32'h0000_0030;
+        addr_i = 8'h30;
         data_i = 32'h00000001;  // Bit 0 é o "start"
         @(negedge clk);
         
         we_i = 4'b0000;  // Desativa a escrita
 
         // Aguardar o sinal valid ser ativado
-        addr_i = 32'h0000_0030;  // Endereço do CSR para verificar o "valid"
+        addr_i = 8'h30;  // Endereço do CSR para verificar o "valid"
         @(negedge clk);
 
         wait(data_o[1] == 1);    // Espera até o bit 1 (valid) ser 1
         // Leitura do ciphertext (CT_0~3)
         @(negedge clk); 
 
-        addr_i = 32'h0000_0020;  // Parte mais alta do ciphertext
+        addr_i = 8'h20;  // Parte mais alta do ciphertext
         @(negedge clk); 
-        $display("Ciphertext part 0: %h", data_o);
+        $display("Ciphertext part LL: %h", data_o);
         
-        addr_i = 32'h0000_0024;  // Parte seguinte
+        addr_i = 8'h24;  // Parte seguinte
         @(negedge clk);
-        $display("Ciphertext part 1: %h", data_o);
+        $display("Ciphertext part LH: %h", data_o);
 
-        addr_i = 32'h0000_0028;  // Parte seguinte
+        addr_i = 8'h28;  // Parte seguinte
         @(negedge clk); 
-        $display("Ciphertext part 2: %h", data_o);
+        $display("Ciphertext part HL: %h", data_o);
 
-        addr_i = 32'h0000_002C;  // Parte mais baixa
+        addr_i = 8'h2C;  // Parte mais baixa
         @(negedge clk); 
-        $display("Ciphertext part 3: %h", data_o);
+        $display("Ciphertext part HH: %h", data_o);
         
         //
 
@@ -106,68 +110,126 @@ module tb_simon_interface;
         en_i = 1;
         we_i = 4'b1111;  // Ativa escrita para tods os bytes
 
-        addr_i = 32'h0000_0000;
-        data_i = 32'h7463_6364;  // Parte mais alta do plaintext
+        addr_i = 8'h00;
+        data_i = 32'h3230_3234;  // Parte mais baixa
         @(negedge clk);
-        addr_i = 32'h0000_0004;
-        data_i = 32'h616E_6965;  // Parte seguinte
-        @(negedge clk);
-        addr_i = 32'h0000_0008;
+        addr_i = 8'h04;
         data_i = 32'h6C31_322F;
         @(negedge clk);
-        addr_i = 32'h0000_000C;
-        data_i = 32'h3230_3234;  // Parte mais baixa
+        addr_i = 8'h08;
+        data_i = 32'h616E_6965;  // Parte seguinte
+        @(negedge clk);
+        addr_i = 8'h0C;
+        data_i = 32'h7463_6364;  // Parte mais alta do plaintext
         @(negedge clk);
 
         // Teste: Escrever chave nos registradores KEY_0~3
         @(negedge clk); 
-        addr_i = 32'h0000_0010;
-        data_i = 32'h7463_6364;  // Parte mais alta da chave
-        @(negedge clk);
-        addr_i = 32'h0000_0014;
-        data_i = 32'h616E_6965;  // Parte seguinte
-        @(negedge clk); 
-        addr_i = 32'h0000_0018;
-        data_i = 32'h6C31_322F;
-        @(negedge clk);
-        addr_i = 32'h0000_001C;
+        addr_i = 8'h10;
         data_i = 32'h3230_3234;  // Parte mais baixa
+        @(negedge clk);
+        addr_i = 8'h14;
+        data_i = 32'h6C31_322F;
+        @(negedge clk); 
+        addr_i = 8'h18;
+        data_i = 32'h616E_6965;  // Parte seguinte
+        @(negedge clk);
+        addr_i = 8'h1C;
+        data_i = 32'h7463_6364;  // Parte mais alta da chave
         @(negedge clk);
 
         // Teste: Iniciar a operação de criptografia (escrever no CSR)
-        addr_i = 32'h0000_0030;
+        addr_i = 8'h30;
+        data_i = 32'h00000001;  // Bit 0 é o "start"
+        @(negedge clk);
+        
+        // Teste: Iniciar a operação de criptografia (escrever no CSR)
+        addr_i = 8'h30;
         data_i = 32'h00000001;  // Bit 0 é o "start"
         @(negedge clk);
         
         we_i = 4'b0000;  // Desativa a escrita
 
         // Aguardar o sinal valid ser ativado
-        addr_i = 32'h0000_0030;  // Endereço do CSR para verificar o "valid"
+        addr_i = 8'h30;  // Endereço do CSR para verificar o "valid"
         @(negedge clk);
 
         wait(data_o[1] == 1);    // Espera até o bit 1 (valid) ser 1
         // Leitura do ciphertext (CT_0~3)
         @(negedge clk); 
 
-        addr_i = 32'h0000_0020;  // Parte mais alta do ciphertext
+        addr_i = 8'h20;  // Parte mais alta do ciphertext
         @(negedge clk); 
-        $display("Ciphertext part 0: %h", data_o);
+        $display("Ciphertext part LL: %h", data_o);
         
-        addr_i = 32'h0000_0024;  // Parte seguinte
+        addr_i = 8'h24;  // Parte seguinte
         @(negedge clk);
-        $display("Ciphertext part 1: %h", data_o);
+        $display("Ciphertext part LH: %h", data_o);
 
-        addr_i = 32'h0000_0028;  // Parte seguinte
+        addr_i = 8'h28;  // Parte seguinte
         @(negedge clk); 
-        $display("Ciphertext part 2: %h", data_o);
+        $display("Ciphertext part HL: %h", data_o);
 
-        addr_i = 32'h0000_002C;  // Parte mais baixa
+        addr_i = 8'h2C;  // Parte mais baixa
         @(negedge clk); 
-        $display("Ciphertext part 3: %h", data_o);
+        $display("Ciphertext part HH: %h", data_o);
 
-        // Fazer outro teste em sequência!!!!!
-        // Chave = 0x74636364616e69656c31322f32303234
-        // Pt    = 0x74636364616e69656c31322f32303234
+
+        //
+
+
+
+        // Teste 3: decrypt
+        en_i = 1;
+        we_i = 4'b1111;  // Ativa escrita para tods os bytes
+
+        addr_i = 8'h34;
+        data_i = 32'h0000_0000;  // Modo decrypt
+        @(negedge clk);
+
+        addr_i = 8'h00;
+        data_i = 32'h34BA_84F6;  // Parte mais baixa
+        @(negedge clk);
+        addr_i = 8'h04;
+        data_i = 32'h4DB7_7887;
+        @(negedge clk);
+        addr_i = 8'h08;
+        data_i = 32'h3F3E_BAC3;  // Parte seguinte
+        @(negedge clk);
+        addr_i = 8'h0C;
+        data_i = 32'h7094_CBB0;  // Parte mais alta do plaintext
+        @(negedge clk);
+        
+        // Teste: Iniciar a operação de criptografia (escrever no CSR)
+        addr_i = 8'h30;
+        data_i = 32'h00000001;  // Bit 0 é o "start"
+        @(negedge clk);
+        
+        we_i = 4'b0000;  // Desativa a escrita
+
+        // Aguardar o sinal valid ser ativado
+        addr_i = 8'h30;  // Endereço do CSR para verificar o "valid"
+        @(negedge clk);
+
+        wait(data_o[1] == 1);    // Espera até o bit 1 (valid) ser 1
+        // Leitura do ciphertext (CT_0~3)
+        @(negedge clk); 
+
+        addr_i = 8'h20;  // Parte mais alta do ciphertext
+        @(negedge clk); 
+        $display("Plaintext part LL: %h", data_o);
+        
+        addr_i = 8'h24;  // Parte seguinte
+        @(negedge clk);
+        $display("Plaintext part LH: %h", data_o);
+
+        addr_i = 8'h28;  // Parte seguinte
+        @(negedge clk); 
+        $display("Plaintext part HL: %h", data_o);
+
+        addr_i = 8'h2C;  // Parte mais baixa
+        @(negedge clk); 
+        $display("Plaintext part HH: %h", data_o);
 
         // Finaliza a simulação
         $finish();
