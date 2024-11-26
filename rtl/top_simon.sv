@@ -92,12 +92,13 @@ module top_simon (
     );
 
     // **Instanciação da rodada do Simon**
+    logic [127:0] pt;
+    assign pt = encrypt_i ? pt_i : {pt_i[63:0], pt_i[127:64]};
     rodada_simon round_sim (
         .clk(clk),        // Conecta o clock
         .rst_n(rst_n),    // Conecta o reset
         .enable_i(enable),//Adiciona sinal de habilitação
-        .encrypt_i(encrypt_i),
-        .pt_i(pt_i),      // Recebe o plaintext
+        .pt_i(pt),      // Recebe o plaintext
         .kj_i(kj),        // Recebe a chave expandida do esquema de chave
         .ct_o(ct)         // Fornece o ciphertext resultante
     );

@@ -2,7 +2,6 @@ module rodada_simon(
     input  logic         clk,
     input  logic         rst_n,
     input  logic         enable_i,
-    input  logic         encrypt_i,
     input  logic [127:0] pt_i,  // Entrada de texto de 128 bits
     input  logic [ 63:0] kj_i,   // Entrada da chave de rodada de 64 bits
     output logic [127:0] ct_o // Saída de texto cifrado de 128 bits
@@ -18,15 +17,8 @@ module rodada_simon(
             pt2 <= 64'b0;
         end 
         else if (!enable_i) begin
-            // Sem enable, grava os valores de entrada em pt1 e pt2
-            if (encrypt_i) begin // modo criptografia
-                pt1 <= pt_i[127:64];  // Parte mais significativa do texto de entrada
-                pt2 <= pt_i[ 63: 0];  // Parte menos significativa do texto de entrada
-            end
-            else begin  // Para descriptografar a inicialização é invertida
-                pt1 <= pt_i[ 63: 0];
-                pt2 <= pt_i[127:64];
-            end
+            pt1 <= pt_i[127:64];  // Parte mais significativa do texto de entrada
+            pt2 <= pt_i[ 63: 0];  // Parte menos significativa do texto de entrada
         end 
         else begin
             // Com enable ativo, atualiza os valores conforme a computação
